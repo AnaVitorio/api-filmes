@@ -24,5 +24,16 @@ public class MovieService {
         return moviesDao.listarFilmes();
     }
 
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Movies> adicionarFilmes(List<Movies> filmes) {
+        return moviesDao.adicionarFilmes(filmes);
+
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    public Movies buscarFilmePeloNome(String titulo){
+        return moviesDao.buscarFilmePeloNome(titulo.toLowerCase());
+    }
+
 
 }
