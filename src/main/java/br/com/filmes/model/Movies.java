@@ -1,24 +1,30 @@
 package br.com.filmes.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 @Entity
-public class Movies {
+public class Movies extends PanacheEntityBase{
     
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
 
     private String titulo;
     private String diretor;
     private String genero;
     private String lancamento;
 
-    public int getId(){
+    public Long getId(){
         return this.id;
     };
 
-    public void setId(int id){
+    public void setId(Long id){
         this.id = id;
     };
 
