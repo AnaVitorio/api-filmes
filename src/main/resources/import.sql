@@ -7,6 +7,6 @@
 -- );
 
 
-INSERT INTO Movies(id, titulo, diretor, genero, lancamento)
-VALUES(1, 'Titanic', 'James Cameron', 'Romance', '19/01/1998' );
+-- INSERT INTO Movies(titulo, diretor, genero, lancamento)
+-- VALUES('Titanic', 'James Cameron', 'Romance', '19/01/1998' );
 
