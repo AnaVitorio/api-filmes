@@ -4,8 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+
 
 @Entity
 public class Movies extends PanacheEntityBase{
@@ -14,10 +17,20 @@ public class Movies extends PanacheEntityBase{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
+    @NotEmpty(message = "Título não pode estar vazio")
+    @NotNull(message = "Título não pode ser nulo")
     private String titulo;
+
+    @NotEmpty(message = "Diretor não pode estar vazio")
+    @NotNull(message = "Diretor não pode ser nulo")
     private String diretor;
+
+    @NotEmpty(message = "Gênero não pode estar vazio")
+    @NotNull(message = "Gênero não pode ser nulo")
     private String genero;
+
+    @NotEmpty(message = "Lançamento não pode estar vazio")
+    @NotNull(message = "Lançamento não pode ser nulo")
     private String lancamento;
 
     public Long getId(){

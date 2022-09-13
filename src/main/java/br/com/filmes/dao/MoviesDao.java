@@ -1,11 +1,10 @@
 package br.com.filmes.dao;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
-import javax.ws.rs.core.Response;
-
 import br.com.filmes.model.Movies;
 
 @ApplicationScoped
@@ -22,12 +21,16 @@ public class MoviesDao {
         return filme;
     }
 
-    public Movies buscarFilmePeloNome(String titulo) {
+    public List<Movies> buscarFilmePeloNome(String titulo) {
         List<Movies> filmes = Movies.findAll().list();
-        return filmes.stream()
-                     .filter(filme -> filme.getTitulo()
-                                            .toLowerCase()
-                                            .equals(titulo)).findFirst().get();
+
+        List<Movies> filmesEncontrados = filmes.stream()
+                                                .filter(filme -> filme.getTitulo()
+                                                                        .toLowerCase()
+                                                                        .equals(titulo))
+                                                                        .collect(Collectors.toList());
+                                                                        
+        return filmesEncontrados;
     }
 
     @Transactional
@@ -41,8 +44,8 @@ public class MoviesDao {
     }
 
     @Transactional
-    public Response deletarFilme(Long id) {
+    public void deletarFilme(Long id) {
         Movies.deleteById(id);
-        return Response.ok().status(Response.Status.OK).build();
+      
     }
 }

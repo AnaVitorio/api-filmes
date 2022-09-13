@@ -1,6 +1,7 @@
 package br.com.filmes.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.Produces;
@@ -23,21 +24,36 @@ public class MovieService {
     }
 
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Movies> listarFilmes(){
+    public List<Movies> listarTodasInfoFilmes(){
         return moviesDao.listarFilmes();
     }
 
     @Produces(MediaType.APPLICATION_JSON)
-    public MoviesDto adicionarFilmes(MoviesDto filmeDto) {
+    public List<MoviesDto> listarFilmes(){
+        List<Movies> listaFilmes = moviesDao.listarFilmes();
+        List<MoviesDto> listaFilmesDto = listaFilmes.stream().map(filme -> toMoviesDTO(filme)).collect(Collectors.toList());
+        return listaFilmesDto;
+    }
+
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response adicionarFilmes(MoviesDto filmeDto) {
         Movies filme = toMovies(filmeDto);
         MoviesDto filmeCadastrado = toMoviesDTO(moviesDao.adicionarFilmes(filme));
-        return filmeCadastrado;
+        return Response.ok(filmeCadastrado).status(Response.Status.CREATED).build();
 
     }
 
     @Produces(MediaType.APPLICATION_JSON)
-    public Movies buscarFilmePeloNome(String titulo){
-        return moviesDao.buscarFilmePeloNome(titulo.toLowerCase());
+    public Response buscarFilmePeloNome(String titulo){
+        List<Movies> filmes = moviesDao.buscarFilmePeloNome(titulo.toLowerCase());
+
+        if(filmes.size() == 0){
+            return Response.noContent().status(Response.Status.NOT_FOUND).build();
+        }
+
+        MoviesDto filmeProcurado = toMoviesDTO(filmes.get(0));
+
+        return Response.ok(filmeProcurado).build() ;
     }
 
     public MoviesDto atualizarFilme(MoviesDto filmeAtualizado, Long id) {
@@ -47,7 +63,11 @@ public class MovieService {
     }
 
     public Response deletarFilme(Long id) {
-        return Response.ok(moviesDao.deletarFilme(id)).build();
+        if(Movies.findById(id).equals(null)){
+            return Response.noContent().status(Response.Status.NOT_FOUND).build();
+        }
+        moviesDao.deletarFilme(id);
+        return Response.ok().status(Response.Status.ACCEPTED).build();
     }
 
 
