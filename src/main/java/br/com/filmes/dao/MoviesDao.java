@@ -4,15 +4,34 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+
 import javax.transaction.Transactional;
 import br.com.filmes.model.Movies;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.quarkus.panache.common.Page;
 
 @ApplicationScoped
 public class MoviesDao {
 
-    public List<Movies> listarFilmes(){
-        List<Movies> listaFilmes = Movies.findAll().list();
-        return listaFilmes;
+    @Inject
+    EntityManager em;
+
+    public List<Movies> listarFilmes(int pag) throws Exception{
+        
+        PanacheQuery<Movies> filmes = Movies.findAll();
+
+        filmes.page(Page.ofSize(5));
+        // List<Movies> firstPage = filmes.list();
+        pag= pag - 1;
+    
+        if((pag < 0)){ 
+            throw new Exception("Página não encontrada");
+        }
+        List<Movies> page = filmes.page(Page.of(pag, 5)).list();
+         
+        return page;
     }
 
     @Transactional

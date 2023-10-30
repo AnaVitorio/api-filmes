@@ -32,32 +32,31 @@ public class MoviesResource {
         this.movieService = movieService;
     }
 
-    @Path("/listar/info")
+    // @Path("/listar/info")
+    // @GET
+    // @Produces(MediaType.APPLICATION_JSON)
+    // @APIResponses(value = {
+    //     @APIResponse(responseCode = "200", description = "Lista de filmes retornada com sucesso"),
+    // })
+    // @Operation(
+    //     summary = "Lista todos os filme da base com todas as informações",
+    //     description = "REST Endpoint que retorna todos os filmes da base com todas as informações.")
+    // public Response listarTodasInfoFilmes() {
+    //     return Response.ok(movieService.listarTodasInfoFilmes()).build();
+    // }
+
+    @Path("/listar/{pag}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @APIResponses(value = {
         @APIResponse(responseCode = "200", description = "Lista de filmes retornada com sucesso"),
     })
     @Operation(
-        summary = "Lista todos os filme da base com todas as informações",
-        description = "REST Endpoint que retorna todos os filmes da base com todas as informações.")
-    public Response listarTodasInfoFilmes() {
-        return Response.ok(movieService.listarTodasInfoFilmes()).build();
+        summary = "Lista os filmes com paginação",
+        description = "REST Endpoint que retorna os filmes de acordo com o número da página passado.")
+    public Response listarFilmes(@PathParam("pag") int pag) throws Exception {
+        return Response.ok(movieService.listarFilmes(pag)).build();
     }
-
-    @Path("/listar")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @APIResponses(value = {
-        @APIResponse(responseCode = "200", description = "Lista de filmes retornada com sucesso"),
-    })
-    @Operation(
-        summary = "Lista todos os filmes na base com as principais informações",
-        description = "REST Endpoint que retorna todos os filmes da base com as principais informações.")
-    public Response listarFilmes() {
-        return Response.ok(movieService.listarFilmes()).build();
-    }
-
 
     @Path("/buscar/{titulo}")
     @GET

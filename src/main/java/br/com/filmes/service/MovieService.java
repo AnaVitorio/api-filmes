@@ -22,15 +22,9 @@ public class MovieService {
     public MovieService(MoviesDao moviesDao){
         this.moviesDao = moviesDao;
     }
-
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Movies> listarTodasInfoFilmes(){
-        return moviesDao.listarFilmes();
-    }
-
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<MoviesDto> listarFilmes(){
-        List<Movies> listaFilmes = moviesDao.listarFilmes();
+    public List<MoviesDto> listarFilmes(int pag) throws Exception{
+        List<Movies> listaFilmes = moviesDao.listarFilmes(pag);
         List<MoviesDto> listaFilmesDto = listaFilmes.stream().map(filme -> toMoviesDTO(filme)).collect(Collectors.toList());
         return listaFilmesDto;
     }
