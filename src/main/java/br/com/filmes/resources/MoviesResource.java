@@ -32,18 +32,18 @@ public class MoviesResource {
         this.movieService = movieService;
     }
 
-    // @Path("/listar/info")
-    // @GET
-    // @Produces(MediaType.APPLICATION_JSON)
-    // @APIResponses(value = {
-    //     @APIResponse(responseCode = "200", description = "Lista de filmes retornada com sucesso"),
-    // })
-    // @Operation(
-    //     summary = "Lista todos os filme da base com todas as informações",
-    //     description = "REST Endpoint que retorna todos os filmes da base com todas as informações.")
-    // public Response listarTodasInfoFilmes() {
-    //     return Response.ok(movieService.listarTodasInfoFilmes()).build();
-    // }
+    @Path("/listar/todos")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @APIResponses(value = {
+        @APIResponse(responseCode = "200", description = "Lista de filmes retornada com sucesso"),
+    })
+    @Operation(
+        summary = "Lista todos os filmes da base",
+        description = "REST Endpoint que retorna todos os filmes da base")
+    public Response listarTodasInfoFilmes() {
+        return Response.ok(movieService.listarTodosFilmes()).build();
+    }
 
     @Path("/listar/{pag}")
     @GET

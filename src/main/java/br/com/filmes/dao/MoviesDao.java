@@ -67,4 +67,9 @@ public class MoviesDao {
         Movies.deleteById(id);
       
     }
+
+    public List<Movies> listarTodosFilmes() {
+         List<Movies> filmes = Movies.findAll().list();
+        return filmes;
+    }
 }
