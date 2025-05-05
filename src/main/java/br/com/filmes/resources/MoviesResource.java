@@ -1,6 +1,7 @@
 package br.com.filmes.resources;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -26,11 +27,9 @@ import br.com.filmes.service.MovieService;
 @ApplicationScoped
 public class MoviesResource {
 
+    @Inject
     private MovieService movieService;
 
-    public MoviesResource(MovieService movieService){
-        this.movieService = movieService;
-    }
 
     @Path("/listar/todos")
     @GET

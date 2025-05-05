@@ -1,21 +1,15 @@
 package br.com.filmes.service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.enterprise.context.ApplicationScoped;
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import org.modelmapper.ModelMapper;
 
 import br.com.filmes.dao.MoviesDao;
 import br.com.filmes.model.Movies;
 import br.com.filmes.model.MoviesDto;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
 
 @ApplicationScoped
 public class MovieService {
@@ -42,7 +36,6 @@ public class MovieService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response adicionarFilmes(MoviesDto filmeDto) {
         Movies filme = toMovies(filmeDto);
-        // List<Movies> listaFilmes = listarFilmes(0)
         MoviesDto filmeCadastrado = toMoviesDTO(moviesDao.adicionarFilmes(filme));
         return Response.ok(filmeCadastrado).status(Response.Status.CREATED).build();
 
@@ -75,7 +68,7 @@ public class MovieService {
         return Response.ok().status(Response.Status.ACCEPTED).build();
     }
 
-
+ 
     public static MoviesDto toMoviesDTO(Movies filme) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(filme, MoviesDto.class);

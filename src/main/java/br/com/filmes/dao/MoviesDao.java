@@ -23,7 +23,6 @@ public class MoviesDao {
         PanacheQuery<Movies> filmes = Movies.findAll();
 
         filmes.page(Page.ofSize(5));
-        // List<Movies> firstPage = filmes.list();
         pag= pag - 1;
     
         if((pag < 0)){ 

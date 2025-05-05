@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedNativeQueries;
-import javax.persistence.NamedNativeQuery;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,13 +11,6 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 
 @Entity
-@NamedNativeQueries({
-    @NamedNativeQuery(
-      name = "LISTAR_FILMES",
-      query = "SELECT id, titulo, diretor, genero, lancamento FROM Movies", 
-      resultClass=Movies.class
-    )
-  })
 public class Movies extends PanacheEntityBase{
     
     @Id

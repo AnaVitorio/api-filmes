@@ -30,7 +30,7 @@ public class MovieServiceTest {
     @Test
     void testBuscarFilmePeloNome() {
        
-        MoviesDao moviesDao = Mockito.mock(MoviesDao.class);
+        Mockito.mock(MoviesDao.class);
         MovieService movieService = Mockito.mock(MovieService.class);
 
         List<Movies> listaFilmes = new ArrayList<>();
@@ -43,8 +43,6 @@ public class MovieServiceTest {
         filme.setTitulo("null");
 
         listaFilmes.add(filme);
-
-        // Mockito.when(moviesDao.buscarFilmePeloNome(Mockito.anyString())).thenReturn(listaFilmes);
 
         assertDoesNotThrow(() -> movieService.buscarFilmePeloNome("null"));        
 
